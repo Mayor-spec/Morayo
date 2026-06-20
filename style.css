@@ -1,22 +1,348 @@
+:root {
+    --bg-main: #0a0a0a;
+    --bg-surface: #121212;
+    --bg-card: #1a1a1a;
+    --border-color: #333333;
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    --accent-color: #4f46e5;
+    --accent-success: #10b981;
+    --accent-error: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 body {
-    background-color: #0a0a0a;
-    color: #ffffff;
-    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* Authentication Wrappers */
+.auth-container {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    align-items: center;
+    height: 100vh;
 }
-.container { width: 100%; max-width: 600px; }
-button {
-    display: block;
+
+.form-box {
+    background: var(--bg-surface);
+    padding: 40px;
+    border-radius: 12px;
     width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-    background: #1a1a1a;
-    border: 1px solid #ffd700;
-    color: #ffd700;
-    cursor: pointer;
-    font-size: 16px;
+    max-width: 420px;
+    border: 1px solid var(--border-color);
 }
-button:hover { background: #ffd700; color: #000; }
-#question-text { font-size: 20px; margin-bottom: 20px; text-align: center; }
+
+.form-box h2 {
+    font-size: 1.75rem;
+    margin-bottom: 8px;
+}
+
+.form-box p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+.form-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 6px;
+}
+
+.form-box button {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.toggle-action {
+    margin-top: 20px !important;
+    text-align: center;
+}
+
+.toggle-action span {
+    color: var(--accent-color);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Main Dashboard Workspace */
+.main-workspace {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-surface);
+    padding: 16px 24px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Review Mode Banner */
+.review-banner {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 24px;
+    color: var(--accent-error);
+}
+
+.review-banner button {
+    margin-top: 8px;
+    background: var(--accent-error);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Workspace Panels Layout */
+.workspace-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.panel-card {
+    background: var(--bg-surface);
+    padding: 24px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.history-box {
+    margin-top: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-item-row {
+    display: flex;
+    justify-content: space-between;
+    background: var(--bg-main);
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.history-item-row:hover {
+    border-color: var(--accent-color);
+}
+
+.history-score-badge {
+    background: rgba(79, 70, 229, 0.15);
+    color: #a5b4fc;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.card-upload-area {
+    background: var(--bg-surface);
+    padding: 28px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.card-upload-area textarea {
+    width: 100%;
+    height: 150px;
+    background: var(--bg-main);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+    resize: vertical;
+}
+
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input-group select {
+    padding: 8px;
+    background: var(--bg-main);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.action-btn {
+    padding: 12px 24px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Widgets Grid Configuration */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.widget-card {
+    background: var(--bg-surface);
+    height: 280px;
+    perspective: 1000px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 12px;
+    background: var(--bg-surface);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background: #1e1b4b;
+    border: 1px solid #312e81;
+}
+
+.widget-card.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.widget-card.flipped .card-back {
+    transform: rotateY(360deg);
+}
+
+.card-text {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    overflow-y: auto;
+    max-height: 150px;
+}
+
+.widget-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 12px;
+}
+
+.nav-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.flip-hint {
+    text-align: center;
+    color: #a5b4fc;
+}
+
+/* Quiz Content Area UI */
+.quiz-session-panel {
+    margin-top: 24px;
+    background: var(--bg-surface);
+    padding: 28px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.quiz-question {
+    margin: 20px 0;
+    padding: 16px;
+    background: var(--bg-main);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.option-btn {
+    padding: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.option-btn:hover:not(:disabled) {
+    border-color: var(--accent-color);
+}
+
+.quiz-explanation {
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 4px solid var(--accent-success);
+    color: #a7f3d0;
+    font-size: 0.9rem;
+}
+
+.hidden { display: none !important; }
