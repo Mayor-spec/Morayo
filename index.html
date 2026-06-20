@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>WGTBAM 2.0 Practice</h1>
+        <input type="password" id="api-key" placeholder="Enter Gemini API Key">
+        <div id="quiz-area">
+            <p id="question-text">Select a category to start:</p>
+            <div id="options"></div>
+            <p id="explanation"></p>
+        </div>
+        <button onclick="loadQuestion('General Affairs')">General Affairs</button>
+        <button onclick="loadQuestion('Governance and OAU History')">Governance & OAU History</button>
+        <button onclick="loadQuestion('Sports')">Sports</button>
+        <button onclick="loadQuestion('Entertainment')">Entertainment</button>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
