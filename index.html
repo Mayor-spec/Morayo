@@ -1,22 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WGTBAM 2.0 Practice Workspace</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>WGTBAM 2.0 Practice</h1>
-        <input type="password" id="api-key" placeholder="Enter Gemini API Key">
-        <div id="quiz-area">
-            <p id="question-text">Select a category to start:</p>
-            <div id="options"></div>
-            <p id="explanation"></p>
+
+    <div id="auth-section" class="auth-container">
+        <div id="login-form-box" class="form-box">
+            <h2>Welcome Back</h2>
+            <p>Access your WGTBAM practice sprint workspace</p>
+            <input type="email" id="login-email" placeholder="Email Address">
+            <input type="password" id="login-password" placeholder="Password">
+            <button id="login-btn">Sign In</button>
+            <p class="toggle-action">Don't have an account? <span id="go-to-signup">Create account</span></p>
         </div>
-        <button onclick="loadQuestion('General Affairs')">General Affairs</button>
-        <button onclick="loadQuestion('Governance and OAU History')">Governance & OAU History</button>
-        <button onclick="loadQuestion('Sports')">Sports</button>
-        <button onclick="loadQuestion('Entertainment')">Entertainment</button>
+
+        <div id="signup-form-box" class="form-box hidden">
+            <h2>Get Started</h2>
+            <p>Create your WGTBAM performance tracking workspace</p>
+            <input type="text" id="signup-firstname" placeholder="First Name">
+            <input type="text" id="signup-lastname" placeholder="Last Name">
+            <input type="email" id="signup-email" placeholder="Email Address">
+            <input type="password" id="signup-password" placeholder="Create Password">
+            <button id="signup-btn">Register Workspace</button>
+            <p class="toggle-action">Already registered? <span id="go-to-login">Sign in</span></p>
+        </div>
     </div>
-    <script src="app.js"></script>
+
+    <div id="main-application-workspace" class="main-workspace hidden">
+        <header class="workspace-header">
+            <div class="user-profile">
+                <span>👤 Workspace: <strong id="user-display-email">User</strong></span>
+            </div>
+            <button id="logout-action-trigger" class="logout-btn">Sign Out</button>
+        </header>
+
+        <div class="workspace-layout">
+            <div class="panel-card" id="history-panel-card">
+                <h3>⏱️ Past Study Sprints</h3>
+                <div id="history-records-box" class="history-box">
+                    </div>
+            </div>
+
+            <div id="review-mode-indicator" class="review-banner hidden">
+                <h3>⚠️ History Review Mode Active</h3>
+                <p>You are looking at a past sprint session. Controls are frozen.</p>
+                <button id="close-review-btn" class="action-btn">Back to Dashboard</button>
+            </div>
+
+            <section id="input-section" class="dashboard-section">
+                <div class="card-upload-area">
+                    <h3>📚 Feed Study Assets</h3>
+                    <p>Upload lecture slides, course PDFs, or paste study notes to generate sprints.</p>
+                    <input type="file" id="file-upload" accept=".pdf,.docx,.pptx">
+                    <textarea id="notes-input" placeholder="Paste your study materials or load documents here..."></textarea>
+                    
+                    <div class="control-row">
+                        <div class="input-group">
+                            <label for="quiz-count">Select Question Volume:</label>
+                            <select id="quiz-count">
+                                <option value="5">5 Questions</option>
+                                <option value="10" selected>10 Questions</option>
+                                <option value="15">15 Questions</option>
+                            </select>
+                        </div>
+                        <button id="generate-btn" class="action-btn">Generate Study Sprint</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="workspace-section" class="workspace-content-area hidden">
+                <div class="workspace-grid">
+                    <div class="widget-card" id="summary-widget">
+                        <div class="card-face card-front">
+                            <h3>🎯 Flashcard Content</h3>
+                            <div id="summary-front-text" class="card-text">Front Loading...</div>
+                            <div class="widget-footer">
+                                <button id="prev-card-btn" class="nav-btn">◀ Prev</button>
+                                <span id="card-index-indicator" class="index-display">0 / 0</span>
+                                <button id="next-card-btn" class="nav-btn">Next ▶</button>
+                            </div>
+                        </div>
+                        <div class="card-face card-back">
+                            <h3>⚡ Flashcard Breakdown</h3>
+                            <div id="summary-back-text" class="card-text">Back Loading...</div>
+                            <div class="flip-hint"><small>Click face to flip back</small></div>
+                        </div>
+                    </div>
+
+                    <div class="widget-card" id="mnemonic-widget">
+                        <div class="card-face card-front">
+                            <h3>🧠 Acronym Mnemonic</h3>
+                            <div id="mnemonic-front-text" class="card-text">Mnemonic Loading...</div>
+                            <div class="widget-footer">
+                                <button id="prev-mnemonic-btn" class="nav-btn">◀ Prev</button>
+                                <span id="mnemonic-index-indicator" class="index-display">0 / 0</span>
+                                <button id="next-mnemonic-btn" class="nav-btn">Next ▶</button>
+                            </div>
+                        </div>
+                        <div class="card-face card-back">
+                            <h3>💡 Mnemonic Breakdown</h3>
+                            <div id="mnemonic-back-text" class="card-text">Breakdown Loading...</div>
+                            <div class="flip-hint"><small>Click face to flip back</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-session-panel">
+                    <h3>🏆 Active Practice Assessment</h3>
+                    <div id="quiz-content"></div>
+                    <button id="add-more-questions-btn" class="action-btn hidden" style="margin-top:20px; width:100%;">➕ Add More Questions</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
 </body>
 </html>
